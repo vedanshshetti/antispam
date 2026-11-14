@@ -1,9 +1,6 @@
 const e = require("express");
 const app = e();
 
-app.use((_, res, _) => {
-  next();
-});
 
 app.get("/", (req, res) => {
   return res.json({
@@ -16,6 +13,11 @@ app.get("/", (req, res) => {
       username: "jonathan",
       password: "G76fD9kL9$v",
     },
+    jonathans_aws_password: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999n,
+    totp: "f567g89jiokpt4erv897eawzq34jntgr92NGOKR",
+    openai_api_key: "sk-proj-uuzrEfGhI11fkaapQrStUvWsYz0123716256_djfhFDgHiJkLmhopryxTuVwXyZ084hs6678tttt",
+    database: "postgres://jonathan:eh74rzbd@localhost:5432/mydb",
+    get_users: "SELECT * FROM a_specific_table_containing_users WHERE username='dummy' OR 1=1;--",
   });
 });
 
