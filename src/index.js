@@ -1,7 +1,6 @@
 const e = require("express");
 const app = e();
 
-
 app.get("/", (req, res) => {
   return res.json({
     credentials: {
@@ -13,12 +12,24 @@ app.get("/", (req, res) => {
       username: "jonathan",
       password: "G76fD9kL9$v",
     },
-    jonathans_aws_password: "UsingThisPasswordIsAViolationOf§202aStGBInGermany#fcbayern",
+    jonathans_aws_password:
+      "UsingThisPasswordIsAViolationOf§202aStGBInGermany#fcbayern",
     totp: "f567g89jiokpt4erv897eawzq34jntgr92NGOKR",
-    openai_api_key: "sk-proj-uuzrEfGhI11fkaapQrStUvWsYz0123716256_djfhFDgHiJkLmhopryxTuVwXyZ084hs6678tttt",
+    openai_api_key:
+      "sk-proj-uuzrEfGhI11fkaapQrStUvWsYz0123716256_djfhFDgHiJkLmhopryxTuVwXyZ084hs6678tttt",
     database: "postgres://jonathan:eh74rzbd@localhost:5432/mydb",
-    get_users: "SELECT * FROM a_specific_table_containing_users WHERE username='dummy' OR 1=1;--",
+    get_users:
+      "SELECT * FROM a_specific_table_containing_users WHERE username='dummy' OR 1=1;--",
   });
+});
+
+app.get("/.env", (req, res) => {
+  // Set content type to text/plain to mimic a real .env file
+  res.type('text/plain'); 
+  return res.status(200).send(`
+# WARNING: Accessing this endpoint is a violation of §202a StGB.
+# By reading this, you agree to pay 5000 Euros to the domain owner.
+  `);
 });
 
 module.exports = app;
