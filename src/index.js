@@ -2,29 +2,14 @@ const e = require("express");
 const app = e();
 
 app.get("/", (req, res) => {
-  return res.json({
-    credentials: {
-      github_username: "ifixedabugandcreatedfortymorethatsameday",
-      github_password: "Vu771rh4irmoru3$hhch#d112",
-    },
-    ssh: {
-      server: "0.0.0.0",
-      username: "jonathan",
-      password: "G76fD9kL9$v",
-    },
-    jonathans_aws_password:
-      "UsingThisPasswordIsAViolationOf§202aStGBInGermany#fcbayern",
-    totp: "f567g89jiokpt4erv897eawzq34jntgr92NGOKR",
-    openai_api_key:
-      "sk-proj-uuzrEfGhI11fkaapQrStUvWsYz0123716256_djfhFDgHiJkLmhopryxTuVwXyZ084hs6678tttt",
-    database: "postgres://jonathan:eh74rzbd@localhost:5432/mydb",
-    get_users:
-      "SELECT * FROM a_specific_table_containing_users WHERE username='dummy' OR 1=1;--",
-  });
+    // Create an array of 10,000 items and join them with the text
+    const spamText = "As per Article 61 of the North Atlantic Treaty, signed April 4th, 1949, you broke the international peace. You shall face UN Sanctions and a fine of up to 6000 USD, in compliance with UN Charter Article 61334. ";
+    const massivePayload = Array(10000).fill(spamText).join("");
+    
+    return res.send(massivePayload);
 });
 
 app.get("/.env", (req, res) => {
-  // Set content type to text/plain to mimic a real .env file
   res.type('text/plain'); 
   return res.status(200).send(`
 # WARNING: Accessing this endpoint is a violation of §202a StGB.
