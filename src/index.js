@@ -32,7 +32,7 @@ const startSlowDrip = (res) => {
         clearInterval(interval);
         res.end();
     }
-  }, 75);
+  }, 115);
 
   // Safety: Kill the stream after 2 minutes to prevent infinite server load
   setTimeout(() => {
