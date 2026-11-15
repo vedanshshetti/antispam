@@ -15,24 +15,27 @@ const massivePayload2 = Array(10000)
 
 // Helper function for the Slow-Drip Stream
 const startSlowDrip = (res) => {
-  res.setHeader('Content-Type', 'text/plain');
-  res.setHeader('Transfer-Encoding', 'chunked');
-  
-  const words = spamText.split(" ");
+  res.setHeader("Content-Type", "text/plain");
+  res.setHeader("Transfer-Encoding", "chunked");
+
+  const words = (spamText + spamText + spamText + spamText + spamText).split(
+    " ",
+  );
   let index = 0;
 
   // Send one word every 50ms
   const interval = setInterval(() => {
-    if (index < words.length * 100) { // Loop through the text 100 times
-        // Use modulo to loop back to the start of the array
-        const word = words[index % words.length] + " ";
-        res.write(word);
-        index++;
+    if (index < words.length * 100) {
+      // Loop through the text 100 times
+      // Use modulo to loop back to the start of the array
+      const word = words[index % words.length] + " ";
+      res.write(word);
+      index++;
     } else {
-        clearInterval(interval);
-        res.end();
+      clearInterval(interval);
+      res.end();
     }
-  }, 115);
+  }, 75);
 
   // Safety: Kill the stream after 2 minutes to prevent infinite server load
   setTimeout(() => {
@@ -61,31 +64,40 @@ app.get(/^\/wp-content\//, (req, res) => {
 
 // 3. THE FINAL CATCH-ALL (The "Deadly Force" Layer)
 app.use((req, res) => {
-    const ua = req.headers['user-agent'] || '';
-    const host = req.headers.host || '';
-    
-    // List of "Good Bots" to spare
-    const goodBots = ['Googlebot', 'Bingbot', 'DuckDuckBot'];
-    const isGoodBot = goodBots.some(bot => ua.includes(bot));
+  const ua = req.headers["user-agent"] || "";
+  const host = req.headers.host || "";
 
-    // Check for the store subdomain
-    const isStore = host.startsWith('store.');
-    
-    const suspiciousPaths = [
-        '/wint.php', '/.git', '/actuator', '/phpinfo', 
-        '/telescope', '/spip.php', '/server-status', 
-        '/info.php', '/gjbyv.php', '/llw.php'
-    ];
-    const isSuspicious = suspiciousPaths.some(path => req.path.startsWith(path));
-    
-    const noUA = !ua;
+  // List of "Good Bots" to spare
+  const goodBots = ["Googlebot", "Bingbot", "DuckDuckBot"];
+  const isGoodBot = goodBots.some((bot) => ua.includes(bot));
 
-    // Apply deadly force ONLY if it's NOT a good bot
-    if (!isGoodBot && (isSuspicious || noUA || isStore)) {
-        return startSlowDrip(res);
-    }
-    
-    res.status(451).send("You are in violation of §202a StGB... I think.");
+  // Check for the store subdomain
+  const isStore = host.startsWith("store.");
+
+  const suspiciousPaths = [
+    "/wint.php",
+    "/.git",
+    "/actuator",
+    "/phpinfo",
+    "/telescope",
+    "/spip.php",
+    "/server-status",
+    "/info.php",
+    "/gjbyv.php",
+    "/llw.php",
+  ];
+  const isSuspicious = suspiciousPaths.some((path) =>
+    req.path.startsWith(path),
+  );
+
+  const noUA = !ua;
+
+  // Apply deadly force ONLY if it's NOT a good bot
+  if (!isGoodBot && (isSuspicious || noUA || isStore)) {
+    return startSlowDrip(res);
+  }
+
+  res.status(451).send("You are in violation of §202a StGB... I think.");
 });
 
 module.exports = app;
